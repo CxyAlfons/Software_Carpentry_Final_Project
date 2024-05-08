@@ -295,7 +295,7 @@ def Compare(stats):
     model_list = ['Linear', 'Ridge', 'Lasso', 'RF', 'SVR', 'KNN', 'MLP', 'CRNN']
     group_labels = []
     categories = []
-    for i in range(6):
+    for i in range(8):
         group_label = model_list[i]
         group_labels.extend([group_label] * 2)
         categories.append('CV_mean')
@@ -315,14 +315,17 @@ def Compare(stats):
     plt.savefig('Performance_Comparison.png', bbox_inches='tight')
     plt.clf()
 
-def Compare_true(cross_validation, cv_score, final_test, ft_score, model, title):
+def Compare_true(cross_validation, cv_score, final_test, ft_score, model, title, ANN=False):
     '''
     This function takes the whole validation data and uses it to fit the chosen
     model. The model then predicts the values from the final test data, which 
     are then compared to the true final test scores.
     '''
     model_1 = model
-    model_1.fit(cross_validation, cv_score['score'].tolist())
+    if not ANN:
+        model_1.fit(cross_validation, cv_score['score'].tolist())
+    else:
+        model_1.fit(cross_validation, pd.DataFrame(cv_score['score'].tolist()), epochs=7, batch_size=16)
     pred_1 = model_1.predict(final_test)
 
     meta_1 = LinearRegression()
