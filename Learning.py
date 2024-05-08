@@ -425,5 +425,5 @@ if __name__ == '__main__':
 
     # Best performance show
     Compare_true(cross_validation, cv_score, final_test, ft_score, SVR(), "SVR")
-    Compare_true(cross_validation, cv_score, final_test, ft_score, create_mlp(9752), "MLP")
+    Compare_true(cross_validation, cv_score, final_test, ft_score, create_mlp(9752), "MLP", ANN=True)
     
